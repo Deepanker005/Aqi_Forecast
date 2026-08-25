@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Air Quality Forecaster</title>
+    <style>
+        body { 
+            background-color: #FDFBF7; /* Soft pastel background */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333333;
+        }
+        .card {
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); /* Flat vector aesthetic */
+        }
+        .highlight { color: #D7A98C; font-size: 48px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Live AQI: Benzene (C6H6)</h2>
+        <p class="highlight">{{ prediction }} µg/m³</p>
+        <!-- Place your flat vector city image here later -->
+    </div>
+    
+    <!-- Test one of the dummy buttons -->
+    <a href="/settings/">Go to Station Settings</a>
+</body>
+</html>
