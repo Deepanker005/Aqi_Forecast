@@ -1,30 +1,214 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Air Quality Forecaster</title>
     <style>
-        body { 
-            background-color: #FDFBF7; /* Soft pastel background */
+        /* Base Styling & Pastel Palette */
+        :root {
+            --bg-main: #FDFDFB;
+            --bg-sidebar: #F4F7F4;
+            --text-dark: #2C3531;
+            --text-muted: #6B7A75;
+            --accent-green: #D4E2D4;
+            --btn-dark: #375E58;
+            --card-border: #E8ECE8;
+            --chart-peach: #EFCB9F;
+        }
+        body {
+            margin: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #333333;
+            background-color: var(--bg-main);
+            color: var(--text-dark);
+            display: flex;
+            height: 100vh;
         }
+
+        /* Sidebar Layout */
+        .sidebar {
+            width: 260px;
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--card-border);
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0;
+        }
+        .sidebar-header {
+            padding: 0 20px 30px 20px;
+        }
+        .nav-item {
+            padding: 12px 20px;
+            margin: 4px 15px;
+            text-decoration: none;
+            color: var(--text-dark);
+            border-radius: 8px;
+            display: block;
+        }
+        .nav-item.active { background-color: var(--accent-green); font-weight: 600; }
+        .nav-item:hover:not(.active) { background-color: #EAEFEA; }
+        .spacer { flex-grow: 1; }
+        .export-btn {
+            background-color: var(--btn-dark);
+            color: white;
+            text-align: center;
+            padding: 12px;
+            margin: 20px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Top Navigation */
+        .top-nav {
+            height: 70px;
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+            gap: 30px;
+        }
+        .top-nav a { text-decoration: none; color: var(--text-muted); font-weight: 500; }
+        .top-nav a.active { color: var(--btn-dark); border-bottom: 2px solid var(--btn-dark); padding-bottom: 24px; }
+        .nav-right { margin-left: auto; display: flex; align-items: center; gap: 20px; }
+        .search-bar { padding: 8px 16px; border: 1px solid var(--card-border); border-radius: 20px; outline: none; }
+        
+        /* Avatar - Minimalist vector placeholder */
+        .avatar {
+            width: 35px;
+            height: 35px;
+            background-color: var(--accent-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--btn-dark);
+            font-weight: bold;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            padding: 40px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+        }
+
+        /* Cards */
         .card {
-            background-color: #FFFFFF;
+            background: white;
+            border: 1px solid var(--card-border);
             border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05); /* Flat vector aesthetic */
+            padding: 30px;
+            position: relative;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
         }
-        .highlight { color: #D7A98C; font-size: 48px; font-weight: bold; }
+        
+        /* Typography inside cards */
+        .pollutant-badge {
+            background: #F0F0F0;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        .big-number {
+            font-size: 72px;
+            font-weight: bold;
+            color: var(--chart-peach);
+            margin: 20px 0 10px 0;
+        }
+        .unit { font-size: 24px; color: var(--text-dark); }
+        .description { color: var(--text-muted); line-height: 1.5; max-width: 80%; }
+        
+        /* Image Placeholders */
+        .vector-placeholder {
+            width: 100%;
+            height: 200px;
+            background-color: var(--bg-sidebar);
+            border-radius: 8px;
+            margin-top: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            border: 2px dashed var(--card-border);
+        }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h2>Live AQI: Benzene (C6H6)</h2>
-        <p class="highlight">{{ prediction }} µg/m³</p>
-        <!-- Place your flat vector city image here later -->
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h3>Urban Monitor</h3>
+            <span style="color: var(--text-muted); font-size: 14px;">Downtown Sector 4</span>
+        </div>
+        <a href="/" class="nav-item active">Live AQI</a>
+        <a href="/settings/" class="nav-item">Historical Trends</a>
+        <a href="/settings/" class="nav-item">Pollutant Analysis</a>
+        <a href="/settings/" class="nav-item">Station Settings</a>
+        
+        <div class="spacer"></div>
+        <a href="/settings/" class="export-btn">Export Data</a>
+        <a href="/help/" class="nav-item" style="text-align: center;">Help Center</a>
     </div>
-    
-    <!-- Test one of the dummy buttons -->
-    <a href="/settings/">Go to Station Settings</a>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <!-- TOP NAV -->
+        <div class="top-nav">
+            <a href="/" class="active">Dashboard</a>
+            <a href="/settings/">Forecast</a>
+            <a href="/settings/">Health Insights</a>
+            <a href="/settings/">Global Map</a>
+            
+            <div class="nav-right">
+                <input type="text" class="search-bar" placeholder="Search cities...">
+                <!-- Generic faceless vector avatar -->
+                <div class="avatar">U</div>
+            </div>
+        </div>
+
+        <!-- GRID CONTENT -->
+        <div class="dashboard-grid">
+            
+            <!-- Left Card: Prediction -->
+            <div class="card">
+                <span class="pollutant-badge">POLLUTANT</span>
+                <span style="font-size: 20px; font-weight: 600; margin-left: 10px;">Benzene (C6H6)</span>
+                
+                <div class="big-number">
+                    {{ prediction }} <span class="unit">µg/m³</span>
+                </div>
+                
+                <p class="description">Current concentration levels are moderate. Sensitive groups should limit prolonged outdoor exertion.</p>
+                
+                <!-- Replace this div with your actual matplotlib/SVG chart later -->
+                <div class="vector-placeholder">
+                    [ Drop your smooth area chart here ]
+                </div>
+            </div>
+
+            <!-- Right Card: City Art -->
+            <div class="card" style="background-color: #F4F7F4;">
+                <h3 style="margin-top: 0;">Downtown Sector 4</h3>
+                <p style="color: var(--text-muted); font-size: 12px; font-weight: bold; letter-spacing: 1px;">URBAN ENVIRONMENT</p>
+                
+                <!-- Replace this div with your flat vector city image -->
+                <div class="vector-placeholder" style="background-color: white; height: 250px; margin-top: 50px;">
+                    [ Drop your flat vector city artwork here ]
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 </body>
 </html>
