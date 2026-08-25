@@ -16,7 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from dashboard import views
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path('admin/', admin.site.urls),
+    
+    # The Core Project
+    path('', views.aqi_dashboard, name='dashboard'),
+    
+    # The Easter Egg Routes
+    path('settings/', views.shikamaru_drag, name='settings'),
+    path('map/', views.shikamaru_drag, name='map'),
+    path('profile/', views.shikamaru_drag, name='profile'),
+    path('help/', views.shikamaru_drag, name='help'),
 ]
