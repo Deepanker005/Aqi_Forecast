@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -192,7 +193,7 @@
                 
                 <!-- Replace this div with your actual matplotlib/SVG chart later -->
                 <div class="vector-placeholder">
-                    [ Drop your smooth area chart here ]
+                    <img src="{% static 'forecast_chart.png' %}" alt="AQI Forecast Chart" style="width: 100%; border-radius: 8px; margin-top: 30px;">
                 </div>
             </div>
 
@@ -203,7 +204,7 @@
                 
                 <!-- Replace this div with your flat vector city image -->
                 <div class="vector-placeholder" style="background-color: white; height: 250px; margin-top: 50px;">
-                    [ Drop your flat vector city artwork here ]
+                    <img src="{% static 'city_art.png' %}" alt="City Art" style="width: 100%; border-radius: 8px; margin-top: 30px;">
                 </div>
             </div>
 
